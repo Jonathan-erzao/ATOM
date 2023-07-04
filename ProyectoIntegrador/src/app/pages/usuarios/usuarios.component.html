@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+    <div class="col-sm-8 text-center">
+        <img src="../../assets/img/logo.png" alt="" class="mx-auto d-block logo">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-light  mt-n5">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" routerLink="/admin">HOME <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" routerLink="/inventario">Inventario</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" routerLink="/provedores">Provedores</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/usuarios">
+                            <table>Usuarios</table>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+
+                        <a class="nav-link" routerLink="/inicio">Cerrar cesion</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+    </div>
+</div>
+<br>
+<table class="tablaI table">
+    <thead>
+        <tr>
+            <th class="campos" scope="col">IdUsuario</th>
+            <th class="campos" scope="col">Nombre</th>
+            <th class="campos" scope="col">Correo</th>
+            <th class="campos" scope="col">Contraseña</th>
+            <th class="campos" scope="col">Dirección</th>
+            <th class="campos" scope="col">Rol</th>
+            <th class="campos" scope="col">Remover</th>
+            <th class="campos" scope="col">Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let usuario of usuarios">
+            <th class="clId" scope="row">{{ usuario.id }}</th>
+            <td>{{ usuario.nombre }}</td>
+            <td>{{ usuario.correo }}</td>
+            <td>{{ usuario['contraseña'] }}</td>
+            <td>{{ usuario.nombre_direccion }}</td>
+            <td>{{ usuario.nombre_rol }}</td>
+            <td>
+                <button class="btn-delete btn btn-danger btn-sm" (click)="eliminarUsuario(usuario.id)">Eliminar</button>
+            </td>
+            <td>
+                <button class="btn-edit btn btn-secondary btn-sm">Editar</button>
+            </td>
+        </tr>
+    </tbody>
+    
+</table>

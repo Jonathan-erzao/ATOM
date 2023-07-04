@@ -1,0 +1,13 @@
+POST http://localhost:3000/inventario
+Content-Type: application/json
+
+{
+    "id": 4234,
+    "nombre": "Producto de ejemplo",
+    "descripcion": "Producto de ejemplo",
+    "precio_producto": 10.99,
+    "precio_compra": 10.99,
+    "stock": 5,
+    "imagen" : "https://i.blogs.es/0e51a7/pc-2/450_1000.webp",
+    "categoria": 3
+}

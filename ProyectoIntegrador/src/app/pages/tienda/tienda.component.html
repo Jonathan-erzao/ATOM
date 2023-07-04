@@ -1,0 +1,95 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-8 text-center">
+            <img src="../../assets/img/logo.png" alt="" class="mx-auto d-block logo">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-light  mt-n5">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" routerLink="/inicio">HOME <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" routerLink="/tienda">Tienda</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/contactanos">
+                                <Table>Contactanos</Table>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a *ngIf="!servicio.userLoginOn" class="nav-link" routerLink="/login">Login</a>
+<a *ngIf="servicio.userLoginOn" class="nav-link" routerLink="/login">Cerrar sesión</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar align-self-center">
+                    <a class="nav-icon position-relative text-decoration-none" (click)="toggleCart()">
+                        <img src="./assets/img/carrito.png" alt="Carrito" class="carrito-icono"
+                            style="height: 30px; width: 30px;">
+                        <span
+                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-white">
+                            {{ carrito.length }}
+                        </span>
+                    </a>
+                </div>
+            </nav>
+            <div class="cart-container">
+                <div class="cart" *ngIf="showCart">
+                    <h2>Carrito</h2>
+                    <ul>
+                        <li *ngFor="let product of carrito">
+                            <div>{{ product.nombre }}</div>
+                            <div>
+                                <img src="{{ product.imagen }}" alt="{{ product.nombre }}" class="product-image">
+                            </div>
+                            <div>{{ product.precio_compra }}</div>
+                            <button (click)="removeFromCart(product)">Eliminar</button>
+                        </li>
+                    </ul>
+                    <p>Total: {{ totalPrice }}</p>
+                    <button (click)="buy()">Comprar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h1 class="tTienda">Articulos</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col" *ngFor="let producto of productos">
+                    <div class="card">
+                        <div class="front">
+                            <img src="{{ producto.imagen }}" class="card-img-top" alt="" width="auto" height="auto">
+                        </div>
+                        <div class="back">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ producto.nombre }}</h5>
+                                <div class="Descripcion">
+                                    <p class="card-text">{{ producto.descripcion }}</p>
+                                </div>
+                                <h5 class="card-title">{{ producto.nombre_categoria }}</h5>
+
+                                <div class="boton_compra">
+                                    <div class="boton">
+                                        <div class="icono" data-id="{{ producto.id }}"><i class="fa fa-boton"
+                                                aria-hidden="true"></i></div>
+                                        <input type="submit" name="cp" value="COMPRAR" class="nombre-boton "
+                                            (click)="addToCart(producto)">
+                                        <span>{{ producto.stock }}</span>
+                                        <span>{{ producto.precio_compra }}</span>
+                                        <h5 class="card-title"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

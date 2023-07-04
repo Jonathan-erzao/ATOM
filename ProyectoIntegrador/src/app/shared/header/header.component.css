@@ -1,0 +1,63 @@
+
+html{
+    scroll-behavior: smooth;
+}
+
+
+.logo{
+    z-index: 0;
+}
+.navbar{ z-index: 1;    position: static; font-family: "FIFA Welcome"; font-size: 18px}
+.btn{
+    font-family: "FIFA Welcome"; font-size: 20px; 
+}
+.bg-light{
+    background: linear-gradient(#0d0f13 ,#2E4053 );
+    border-radius: 25px;
+}
+.nav-item{
+    padding: 0px 20px;
+}
+.nav-item:first-child{
+    border-right: #2E4053 solid 1px;
+}
+.pc{
+    animation: pc_animacion ease-in-out infinite 4s;
+}
+@keyframes pc_animacion{
+    0%{ transform: translateY(-10%);}
+    50%{ transform: translateY(0%);}
+    100%{ transform: translateY(-10%);}
+}
+
+.container1{
+    margin: auto;
+    width: 100%;
+    max-width: 900px;
+}
+.container2{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-family: "FIFA Welcome";
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+}
+.Informacion{
+    display: flex;
+}
+.image-1{
+    filter: hue-rotate(1500deg) brightness(60%);
+}
+.izquierda{
+    text-align: left;
+    text-align: center;
+    width: 100%;
+    max-width: 1000px;
+}
+.derecha{
+    text-align: right;
+    text-align: center;
+    width: 100%;
+    max-width: 1000px;
+}

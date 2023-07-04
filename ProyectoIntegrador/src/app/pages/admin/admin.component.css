@@ -1,0 +1,30 @@
+html{
+    scroll-behavior: smooth;
+}
+
+
+.logo{
+    z-index: 0;
+}
+.navbar{ z-index: 1;    position: static; font-family: "FIFA Welcome"; font-size: 18px}
+.btn{
+    font-family: "FIFA Welcome"; font-size: 20px; 
+}
+.bg-light{
+    background: linear-gradient(#0d0f13 ,#2E4053 );
+    border-radius: 25px;
+}
+.nav-item{
+    padding: 0px 20px;
+}
+.nav-item:first-child{
+    border-right: #2E4053 solid 1px;
+}
+.pc{
+    animation: pc_animacion ease-in-out infinite 4s;
+}
+@keyframes pc_animacion{
+    0%{ transform: translateY(-10%);}
+    50%{ transform: translateY(0%);}
+    100%{ transform: translateY(-10%);}
+}

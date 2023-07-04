@@ -1,0 +1,27 @@
+<body>
+    <div class="box">
+      <form class="form-signin" (submit)="login()">
+        <div class="form">
+          <div class="HOME">
+            <a routerLink="/inicio">HOME</a>
+          </div>
+          <h2>Iniciar Sesión</h2>
+          <div class="inputBox">
+            <input name="correo" type="email" [(ngModel)]="correo" required>
+            <span>Correo</span>
+            <i></i>
+          </div>
+          <div class="inputBox">
+            <input name="contrasena" type="password" [(ngModel)]="contrasena" required>
+            <span>Contraseña</span>
+            <i></i>
+          </div>
+          <div class="links">
+            <a routerLink="/registro">Registrate</a>
+          </div>
+          <button type="submit">Iniciar</button>
+        </div>
+      </form>
+    </div>
+  </body>
+  
