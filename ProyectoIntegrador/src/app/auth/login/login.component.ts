@@ -9,9 +9,9 @@ import { UserLoginService } from 'src/app/service/user-login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  correo: string = '';
-  contrasena: string = '';
-  userLoginOn: boolean = false;
+  correo = '';
+  contrasena = '';
+  userLoginOn = false;
 
   constructor(private http: HttpClient, private router: Router, public userLoginService: UserLoginService) {}
 
@@ -41,6 +41,6 @@ export class LoginComponent {
       error => {
         console.error('Error al obtener los usuarios:', error);
       })}
-    ;
+    
   }
 }

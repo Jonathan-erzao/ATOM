@@ -4,7 +4,7 @@ import { Directive, ElementRef, Input, Renderer2, OnInit, OnChanges } from '@ang
   selector: '[appShowHide]'
 })
 export class ShowHideDirective implements OnInit, OnChanges {
-  @Input('appShowHide') isVisible: boolean = false;
+  @Input('appShowHide') isVisible = false;
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 

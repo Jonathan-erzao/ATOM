@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class InventarioComponent implements OnInit {
   productos: any[] = [];
 
-  mostrarFormulario: boolean = false
+  mostrarFormulario = false
   productoForm: FormGroup = this.formBuilder.group({
     id: ['', Validators.required],
     nombre: ['', Validators.required],

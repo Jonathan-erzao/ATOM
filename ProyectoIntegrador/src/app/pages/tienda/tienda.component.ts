@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class TiendaComponent implements OnInit{
   productos: any[] = [];
   carrito: any[] = [];
-  totalPrice: number = 0;
+  totalPrice = 0;
   showCart = false;
   toggleCart() {
     this.showCart = !this.showCart;
