@@ -1,12 +1,12 @@
 const { Pool } = require('pg');
 const express = require('express');
-
+const bodyParser = require('body-parser');
 
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'ATOM',
-  password: '1234',
+  password: '2003',
   port: 5432,
 });
 
@@ -17,6 +17,10 @@ app.use(cors({
   origin: 'http://localhost:4200'
 
 }));
+
+// Configurar body-parser
+app.use(bodyParser.json({ limit: '50mb' })); // Establecer un límite mayor según tus necesidades
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // Ruta GET para obtener todos los datos de la tabla "Producto"
 app.get('/tienda', async (req, res) => {
@@ -37,16 +41,34 @@ app.get('/tienda', async (req, res) => {
 
 
 // Método POST para crear un producto
-app.post('/inventario', async (req, res) => {
+app.post('/crearProducto', async (req, res) => {
   try {
-    const { id, nombre, descripcion, precio_producto, precio_compra, stock, imagen, categoria } = req.body;
+    const {
+      id,
+      nombre,
+      descripcion,
+      precioproducto,
+      preciocompra,
+      stock,
+      imagen,
+      categoria
+    } = req.body;
 
     const query = `
-      INSERT INTO "Producto".producto (id, nombre, descripcion, precio_producto, precio_compra, stock, imagen, categoria)
+      INSERT INTO "Producto".producto (id, nombre, descripcion, precioproducto, preciocompra, stock, imagen, categoria)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `;
 
-    await pool.query(query, [id, nombre, descripcion, precio_producto, precio_compra, stock, imagen, categoria]);
+    await pool.query(query, [
+      id,
+      nombre,
+      descripcion,
+      precioproducto,
+      preciocompra,
+      stock,
+      imagen,
+      categoria
+    ]);
 
     res.status(201).json({ message: 'Producto creado exitosamente' });
   } catch (error) {
@@ -54,6 +76,9 @@ app.post('/inventario', async (req, res) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
+
+
+
 //Metodo get para traer los datos de mi usuario
 app.get('/usuarios', async (req, res) => {
   try {
@@ -95,6 +120,12 @@ app.delete('/inventario/:id', async (req, res) => {
   try {
     const productId = req.params.id;
 
+    // Verifica si el ID es un número
+    if (isNaN(productId)) {
+      // Si el ID no es un número, envía un mensaje de error
+      return res.status(400).json({ message: 'El ID debe ser un número válido' });
+    }
+
     const query = `
       DELETE FROM "Producto".producto
       WHERE id = $1
@@ -105,9 +136,26 @@ app.delete('/inventario/:id', async (req, res) => {
     res.status(200).json({ message: 'Producto eliminado exitosamente' });
   } catch (error) {
     console.error('Error al eliminar el producto:', error);
-    res.status(500).json({ message: 'Error interno del servidor' });
+    res.status(500).json({ message: 'Error interno del servidor', error: error.message });
+  }
+  
+});
+
+app.get('/categorias', async (req, res) => {
+  try {
+    const query = `
+    SELECT c.id , c.nombre 
+    FROM "sistema".catalogo c
+    `;
+    const result = await pool.query(query);
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener datos de la tabla Catalogo:', error);
+    res.status(500).json({ error: 'Error al obtener datos de la tabla Categoria' });
   }
 });
+
 //Metodo get para traer los datos de mis proveedores
 app.get('/provedores', async (req, res) => {
   try {
@@ -142,6 +190,11 @@ app.delete('/provedores/:id', async (req, res) => {
     console.error('Error al eliminar el proveedor:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
   }
+});
+
+app.use((req, res, next) => {
+  console.log(`Solicitud ${req.method} a ${req.url}`);
+  next();
 });
 
 // Iniciar el servidor

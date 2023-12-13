@@ -39,32 +39,35 @@
         <h1 class="titulo1 fs-3 text-center">Articulos</h1>
         <button class="btn btn-primary" (click)="toggleMostrarFormulario()">Mostrar/Ocultar Formulario</button>
         <form class="card1 card card-body text-white" (ngSubmit)="agregarProducto()" [formGroup]="productoForm" [appShowHide]="mostrarFormulario">
-            <label class="campos" for="id">ID:</label>
+            <label class="campos" for="Id">ID:</label>
             <input class="form-control mb-2" type="number" id="id" formControlName="id" required><br>
         
             <label for="nombre">Nombre:</label>
             <input class="form-control mb-2" type="text" id="nombre" formControlName="nombre" required><br>
         
             <label for="descripcion">Descripción:</label>
-            <input class="form-control mb-2 " type="text" id="descripcion" formControlName="descripcion" required><br>
+            <input class="form-control mb-2" type="text" id="descripcion" formControlName="descripcion" required><br>
         
             <label for="precio_producto">Precio del producto:</label>
-            <input class="form-control mb-2" type="number" id="precio_producto" formControlName="precio_producto" required><br>
+            <input class="form-control mb-2" type="number" id="precioproducto" formControlName="precioproducto" required><br>
         
             <label for="precio_compra">Precio de compra:</label>
-            <input class="form-control mb-2" type="number" id="precio_compra" formControlName="precio_compra" required><br>
+            <input class="form-control mb-2" type="number" id="preciocompra" formControlName="preciocompra" required><br>
         
             <label for="stock">Stock:</label>
             <input class="form-control mb-2" type="number" id="stock" formControlName="stock" required><br>
         
             <label for="imagen">Imagen:</label>
-            <input class="form-control mb-2" type="text" id="imagen" formControlName="imagen" required><br>
+            <input class="form-control mb-2" type="file" id="imagen" formControlName="imagen" accept="image/*" required><br>
         
             <label for="categoria">Categoría:</label>
-            <input class="form-control mb-2" type="number" id="categoria" formControlName="categoria" required><br>
+            <select class="form-control mb-2" id="categoria" formControlName="categoria" required>
+                <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">{{ categoria.nombre }}</option>
+            </select>
         
             <button class="btn btn-primary" type="submit">Agregar Producto</button>
         </form>
+        
     </div>
 </div>
 <br>
@@ -84,15 +87,18 @@
     </thead>
     <tbody>
         <tr *ngFor="let producto of productos">
-            <th class="clId" scope="row">{{ producto.id }}</th>
-            <td><img src="{{ producto.imagen }}" class="card-img-top" alt="" width="50" height="60"></td>
+            <td>{{ producto.id }}</td>
+            <td><img [src]="producto.imagen" class="card-img-top" alt="" width="50" height="60"></td>
             <td [ngStyle]="producto.nombre | morado">{{ producto.nombre }}</td>
             <td>{{ producto.descripcion }}</td>
             <td>{{ producto.nombre_categoria }}</td>
-            <td>{{ producto.precio_producto | simbolodolar }}</td>
-            <td>{{ producto.precio_compra | simbolodolar }}</td>
+            <td>{{ producto.precioproducto | simbolodolar }}</td>
+            <td>{{ producto.preciocompra | simbolodolar }}</td>
             <td>
-                <button class="btn-delete btn btn-danger btn-sm" (click)="eliminarProducto(producto.id)">Eliminar</button>
+                <button class="btn-delete btn btn-danger btn-sm" (click)="producto.id ? eliminarProducto(producto.id) : null">
+                    Eliminar
+                  </button>
+                  
             </td>
             <td>
                 <button class="btn-edit btn btn-secondary btn-sm">Editar</button>
