@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
+
 
 
 @Component({
@@ -11,9 +13,9 @@ import { HttpClient } from '@angular/common/http';
 export class InventarioComponent implements OnInit {
   productos: any[] = [];
   categorias: any[] = []; // Esto es solo un ejemplo; necesitarás cargar las categorías desde tu base de datos
-
-
+  editar: boolean = false;
   mostrarFormulario = false
+
   productoForm: FormGroup = this.formBuilder.group({
     id: ['', Validators.required],
     nombre: ['', Validators.required],
@@ -76,43 +78,25 @@ export class InventarioComponent implements OnInit {
     if (this.productoForm?.invalid) {
       return;
     }
-
+  
     // Obtener los datos del formulario
     const newProduct = this.productoForm?.value;
-
-    // Aquí se lee el archivo de imagen
-    const fileInput: any = document.getElementById('imagen'); // Cambia 'imagen' por el ID de tu input file
-    const file = fileInput.files[0];
-
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      // Al cargar el archivo, se obtiene un ArrayBuffer
-      const buffer = reader.result as ArrayBuffer;
-
-      // Convertir el ArrayBuffer a base64
-      const byteaImage = this.arrayBufferToBase64(buffer);
-
-      // Asignar la imagen convertida al campo imagen del objeto a enviar
-      newProduct.imagen = byteaImage;
-
-      // Enviar los datos al servidor
-      this.http.post('http://localhost:3000/crearProducto', newProduct)
-        .subscribe(
-          response => {
-            // Manejar la respuesta del servidor
-            console.log('Producto agregado exitosamente', response);
-          },
-          error => {
-            // Manejar el error en caso de falla en la solicitud
-            console.error('Error al agregar el producto', error);
-          }
-        );
-    };
-
-    // Leer el archivo como ArrayBuffer
-    reader.readAsArrayBuffer(file);
+  
+    // Enviar los datos al servidor
+    this.http.post('http://localhost:3000/crearProducto', newProduct)
+      .subscribe(
+        response => {
+          // Manejar la respuesta del servidor
+          console.log('Producto agregado exitosamente', response);
+          window.location.reload();
+        },
+        error => {
+          // Manejar el error en caso de falla en la solicitud
+          console.error('Error al agregar el producto', error);
+        }
+      );
   }
+  
 
   // Función para convertir ArrayBuffer a base64
   arrayBufferToBase64(buffer: ArrayBuffer) {
@@ -139,8 +123,23 @@ export class InventarioComponent implements OnInit {
   
     return parsedId;
   }
-  
 
+  confirmarEliminacion(id: number) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "No podrás revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eliminarProducto(id);
+      }
+    })
+  }
   eliminarProducto(productId: number | null) {
     if (productId === null) {
       console.error('ID no válido');
@@ -166,11 +165,52 @@ export class InventarioComponent implements OnInit {
       console.error('El ID debe ser un número válido');
     }
   }
+   
+  cargarProducto(producto: any ){
+    this.productoForm.patchValue({
+      id: producto.id,
+      nombre: producto.nombre,
+      descripcion: producto.descripcion,
+      precioproducto: producto.precioproducto,
+      preciocompra: producto.preciocompra,
+      stock: producto.stock,
+      imagen: producto.imagen,
+      categoria: producto.categoria
+    });
+    this.editar = true
+    this.mostrarFormulario = true
+
+  }
   
-  
+  actualizarProducto(producto:any){
+    const url = `http://localhost:3000/acproductos/${producto.id}`; // URL para actualizar el producto con su ID
+    this.http.put(url, producto).subscribe(
+      (response) => {
+        console.log('Producto actualizado correctamente:', response);
+        // Realizar acciones adicionales si es necesario después de la actualización
+        window.location.reload();
+      },
+      (error) => {
+        console.error('Error al actualizar el producto:', error);
+      }
+    );
+  }
+
+  nombreBusqueda = '';
+
+  buscarProducto() {
+    if (this.nombreBusqueda) {
+      this.productos = this.productos.filter(producto => producto.nombre.includes(this.nombreBusqueda));
+    } else {
+      this.obtenerProductos(); // Obtener todos los producto si el campo de búsqueda está vacío
+    }
+  }
+
+
   toggleMostrarFormulario() {
     this.mostrarFormulario = !this.mostrarFormulario;
   }
+
 
   
 }

@@ -196,3 +196,63 @@ footer{
     padding-bottom: 10px;
     font-family: "FIFA Welcome";
 }
+
+.boton-buscar {
+    background-color: #4CAF50;
+    /* Color de fondo */
+    border: none;
+    /* Sin bordes */
+    color: white;
+    /* Color del texto */
+    padding: 15px 32px;
+    /* Espaciado alrededor del texto */
+    text-align: center;
+    /* Alineación del texto */
+    text-decoration: none;
+    /* Sin subrayado */
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    /* Cambia el cursor a una mano cuando pasas el ratón por encima */
+    transition-duration: 0.4s;
+    /* Duración de la transición */
+}
+
+.boton-buscar:hover {
+    background-color: #45a049;
+    /* Cambia el color de fondo cuando pasas el ratón por encima */
+}
+
+.busqueda {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    /* Espacio entre la búsqueda y la tabla */
+}
+
+.boton-buscar {
+    /* Los estilos de tu botón de búsqueda */
+    margin-left: 10px;
+    padding: 10px 20px;
+    /* Espacio entre el campo de entrada y el botón */
+}
+
+.campo-busqueda {
+    width: 150px; /* Ajusta el ancho del cuadro de texto */
+    padding: 5px 5px; /* Ajusta el relleno alrededor del texto */
+}
+
+.busqueda-derecha {
+    display: flex;
+    justify-content: flex-end;
+    /* Alinea los elementos a la derecha */
+    margin-bottom: 20px;
+    margin-right: 200px;
+    /* Espacio entre la búsqueda y la tabla */
+}
+
+.icono-ojo {
+    margin-left: 10px; /* Ajusta el espacio a la izquierda del icono */
+    color: black;
+  }

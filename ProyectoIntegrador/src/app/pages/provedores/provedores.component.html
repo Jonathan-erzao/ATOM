@@ -34,6 +34,33 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <div class="col-md-6 offset-md-3">
+        <h1 class="titulo1 fs-3 text-center">Provedores</h1>
+        <button class="btn btn-primary" (click)="toggleMostrarFormulario()">Mostrar/Ocultar Formulario</button>
+        <form class="card1 card card-body text-white" (ngSubmit)="agregarProvedor()" [formGroup]="provedorForm"
+            [appShowHide]="mostrarFormulario">
+            <label class="campos" for="Id" *ngIf="editar">ID:</label>
+            <input class="form-control mb-2" type="number" id="id" formControlName="id" *ngIf="editar"><br>
+
+            <label for="nombre">Nombre:</label>
+            <input class="form-control mb-2" type="text" id="nombre" formControlName="nombre" required><br>
+
+            <label for="descripcion">Descripción:</label>
+            <input class="form-control mb-2" type="text" id="descripcion" formControlName="descripcion" required><br>
+
+            <label for="precio_producto">Correo</label>
+            <input class="form-control mb-2" type="email" id="correo" formControlName="correo"
+                required><br>
+
+
+            <button class="btn btn-primary" type="submit" *ngIf="!editar">Agregar proveedor</button>
+            <button class="btn btn-primary" type="button" *ngIf="editar"
+                (click)="actualizarProvedor()">Actualizar Proveedor</button>
+        </form>
+
+    </div>
+</div>
 <br>
 <table class="tablaI table">
     <thead>
@@ -53,11 +80,11 @@
           <td>{{ provedor.descripcion }}</td>
           <td>{{ provedor.correo }}</td>
           <td>
-            <button class="btn-delete btn btn-danger btn-sm" (click)="eliminarProveedor(provedor.id)">Eliminar</button>
+            <button class="btn-delete btn btn-danger btn-sm" (click)="confirmarEliminacion(provedor.id)">Eliminar</button>
           </td>
           <td>
-            <button class="btn-edit btn btn-secondary btn-sm">Editar</button>
-          </td>
+            <button class="btn-edit btn btn-secondary btn-sm" (click)="cargarProvedor(provedor)">Editar</button>
+            </td>
         </tr>
     </tbody>
       

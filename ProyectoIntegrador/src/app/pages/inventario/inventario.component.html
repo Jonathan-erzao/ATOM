@@ -21,8 +21,7 @@
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/usuarios">
-                                <Table>Usuarios</Table>
+                            <a class="nav-link" routerLink="/usuarios">Usuarios
                             </a>
                         </li>
                         <li class="nav-item">
@@ -38,43 +37,52 @@
     <div class="col-md-6 offset-md-3">
         <h1 class="titulo1 fs-3 text-center">Articulos</h1>
         <button class="btn btn-primary" (click)="toggleMostrarFormulario()">Mostrar/Ocultar Formulario</button>
-        <form class="card1 card card-body text-white" (ngSubmit)="agregarProducto()" [formGroup]="productoForm" [appShowHide]="mostrarFormulario">
+        <form class="card1 card card-body text-white" (ngSubmit)="agregarProducto()" [formGroup]="productoForm"
+            [appShowHide]="mostrarFormulario">
             <label class="campos" for="Id">ID:</label>
             <input class="form-control mb-2" type="number" id="id" formControlName="id" required><br>
-        
+
             <label for="nombre">Nombre:</label>
             <input class="form-control mb-2" type="text" id="nombre" formControlName="nombre" required><br>
-        
+
             <label for="descripcion">Descripción:</label>
             <input class="form-control mb-2" type="text" id="descripcion" formControlName="descripcion" required><br>
-        
+
             <label for="precio_producto">Precio del producto:</label>
-            <input class="form-control mb-2" type="number" id="precioproducto" formControlName="precioproducto" required><br>
-        
+            <input class="form-control mb-2" type="number" id="precioproducto" formControlName="precioproducto"
+                required><br>
+
             <label for="precio_compra">Precio de compra:</label>
-            <input class="form-control mb-2" type="number" id="preciocompra" formControlName="preciocompra" required><br>
-        
+            <input class="form-control mb-2" type="number" id="preciocompra" formControlName="preciocompra"
+                required><br>
+
             <label for="stock">Stock:</label>
             <input class="form-control mb-2" type="number" id="stock" formControlName="stock" required><br>
-        
-            <label for="imagen">Imagen:</label>
-            <input class="form-control mb-2" type="file" id="imagen" formControlName="imagen" accept="image/*" required><br>
-        
+
+            <label for="imagen">URL Imagen:</label>
+            <input class="form-control mb-2" type="text" id="imagen" formControlName="imagen" required><br>
+
             <label for="categoria">Categoría:</label>
             <select class="form-control mb-2" id="categoria" formControlName="categoria" required>
                 <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">{{ categoria.nombre }}</option>
             </select>
-        
-            <button class="btn btn-primary" type="submit">Agregar Producto</button>
+
+            <button class="btn btn-primary" type="submit" *ngIf="!editar">Agregar Producto</button>
+            <button class="btn btn-primary" type="button" *ngIf="editar"
+                (click)="actualizarProducto(productoForm.value)">Actualizar Producto</button>
         </form>
-        
+
     </div>
 </div>
 <br>
+<div class="busqueda-derecha">
+    <input type="text" class="campo-busqueda" [(ngModel)]="nombreBusqueda" placeholder="Nombre">
+    <button class="boton-buscar" (click)="buscarProducto()">Buscar</button>
+</div>
 <table class="tablaI table">
     <thead>
         <tr>
-            <th class="campos" scope="col">IdArticulo</th>
+            <th class="campos" scope="col">Id Producto</th>
             <th class="campos" scope="col">Imagen</th>
             <th class="campos" scope="col">Nombre</th>
             <th class="campos" scope="col">Descripcion</th>
@@ -95,13 +103,10 @@
             <td>{{ producto.precioproducto | simbolodolar }}</td>
             <td>{{ producto.preciocompra | simbolodolar }}</td>
             <td>
-                <button class="btn-delete btn btn-danger btn-sm" (click)="producto.id ? eliminarProducto(producto.id) : null">
-                    Eliminar
-                  </button>
-                  
+                <button class="btn-delete btn btn-danger btn-sm" (click)="confirmarEliminacion(producto.id)">Eliminar</button>
             </td>
             <td>
-                <button class="btn-edit btn btn-secondary btn-sm">Editar</button>
+                <button class="btn-edit btn btn-secondary btn-sm" (click)="cargarProducto(producto)">Editar</button>
             </td>
         </tr>
     </tbody>

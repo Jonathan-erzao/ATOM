@@ -1,40 +1,88 @@
-<div class="row justify-content-center">
-    <div class="col-sm-8 text-center">
-        <img src="../../assets/img/logo.png" alt="" class="mx-auto d-block logo">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-light  mt-n5">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" routerLink="/admin">HOME <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" routerLink="/inventario">Inventario</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" routerLink="/provedores">Provedores</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/usuarios">
-                            <table>Usuarios</table>
-                        </a>
-                    </li>
-                    <li class="nav-item">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-8 text-center">
+            <img src="../../assets/img/logo.png" alt="" class="mx-auto d-block logo">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-light  mt-n5">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" routerLink="/admin">HOME <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" routerLink="/inventario">Inventario</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" routerLink="/provedores">Provedores</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" routerLink="/usuarios">Usuarios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/inicio">Cerrar cesion</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="col-md-6 offset-md-3">
+        <h1 class="titulo1 fs-3 text-center">Usuarios</h1>
+        <button class="btn btn-primary" (click)="toggleMostrarFormulario()">Mostrar/Ocultar Formulario</button>
+        <form class="card1 card card-body text-white" (ngSubmit)="agregarUsuario()" [formGroup]="usuarioForm"
+            [appShowHide]="mostrarFormulario">
+            <label class="campos" for="Id" *ngIf="editar">ID:</label>
+            <input class="form-control mb-2" type="number" id="id" formControlName="id" *ngIf="editar"><br>
 
-                        <a class="nav-link" routerLink="/inicio">Cerrar cesion</a>
-                    </li>
-                </ul>
+            <label for="nombre">Nombre:</label>
+            <input class="form-control mb-2" type="text" id="nombre" formControlName="nombre" required><br>
+
+            <label for="correo">Correo:</label>
+            <input class="form-control mb-2" type="email" id="correo" formControlName="correo" required><br>
+
+            <label for="contraseña">Contraseña:</label>
+            <div style="position: relative;">
+                <input [type]="mostrarContrasenaForm ? 'text' : 'password'" class="form-control mb-2" id="contraseña"
+                    formControlName="contraseña" required>
+                    <i class="fa fa-eye icono-ojo" (click)="cambiarMostrarContrasenaForm()" style="position: absolute; right: 10px; top: 10px;"></i>
             </div>
-        </nav>
+            <br>
+
+            <label for="id_provincia">Provincia:</label>
+            <input class="form-control mb-2" type="text" id="id_provincia" formControlName="id_provincia" required><br>
+
+            <label for="id_canton">Canton:</label>
+            <input class="form-control mb-2" type="text" id="id_canton" formControlName="id_canton" required><br>
+
+            <label for="calle">Calle:</label>
+            <input class="form-control mb-2" type="text" id="calle" formControlName="calle" required><br>
+
+            <label for="rol">Rol:</label>
+            <select class="form-control mb-2" id="rol" formControlName="rol" required>
+                <option *ngFor="let rol of roles" [ngValue]="rol.id">{{ rol.rnombre }}</option>
+            </select>
+
+            <button class="btn btn-primary" type="submit" *ngIf="!editar">Agregar Usuario</button>
+            <button class="btn btn-primary" type="button" *ngIf="editar" (click)="actualizarUsuario()">Actualizar
+                Usuario</button>
+        </form>
 
     </div>
 </div>
 <br>
+<div class="busqueda-derecha">
+    <input type="text" class="campo-busqueda" [(ngModel)]="nombreBusqueda" placeholder="Nombre">
+    <button class="boton-buscar" (click)="buscarUsuario()">Buscar</button>
+</div>
+
 <table class="tablaI table">
     <thead>
         <tr>
@@ -53,16 +101,21 @@
             <th class="clId" scope="row">{{ usuario.id }}</th>
             <td>{{ usuario.nombre }}</td>
             <td>{{ usuario.correo }}</td>
-            <td>{{ usuario['contraseña'] }}</td>
-            <td>{{ usuario.nombre_direccion }}</td>
-            <td>{{ usuario.nombre_rol }}</td>
             <td>
-                <button class="btn-delete btn btn-danger btn-sm" (click)="eliminarUsuario(usuario.id)">Eliminar</button>
+                <span *ngIf="!mostrarContrasena">{{ ocultarContrasena(usuario['contraseña']) }}</span>
+                <span *ngIf="mostrarContrasena">{{ usuario['contraseña'] }}</span>
+                <i class="fa fa-eye icono-ojo" (click)="cambiarMostrarContrasena()"></i>
+            </td>
+            <td>{{ usuario.id_provincia }} , {{ usuario.id_canton }}, {{ usuario.calle }}</td>
+            <td>{{ usuario.rnombre }}</td>
+            <td>
+                <button class="btn-delete btn btn-danger btn-sm" (click)="confirmarEliminacion(usuario.id)">Eliminar</button>
             </td>
             <td>
-                <button class="btn-edit btn btn-secondary btn-sm">Editar</button>
+                <button class="btn-edit btn btn-secondary btn-sm" (click)="cargarUsuario(usuario)">Editar</button>
             </td>
         </tr>
     </tbody>
-    
 </table>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

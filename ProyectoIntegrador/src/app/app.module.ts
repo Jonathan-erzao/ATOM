@@ -20,8 +20,6 @@ import { MoradoPipe } from './pipes/morado.pipe';
 import { SimbolodolarPipe } from './pipes/simbolodolar.pipe';
 import { ShowHideDirective } from './directives/show-hide.directive';
 import { ProvedoresComponent } from './pages/provedores/provedores.component';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireStorageModule } from '@angular/fire/storage';
 
 
 

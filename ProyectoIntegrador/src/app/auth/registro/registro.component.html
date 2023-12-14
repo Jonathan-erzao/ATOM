@@ -1,37 +1,48 @@
 <body>
     
 
-<div class="box">
-    <form class="form" id="formularioUsuario">
-        <div class="HOME" >
-            <a routerLink="/inicio">HOME</a>
-        </div>
-        <h2>Formulario de Registro</h2>
-        <div class="inputBox">
-            <input name="nombre" type="text" required>
-            <span>Nombre</span>
-            <i></i>
-        </div>
-        <div class="inputBox">
-            <input name="apellido" type="text" required>
-            <span>Apellido</span>
-            <i></i>
-        </div>
-        <div class="inputBox">
-            <input name="email" type="mail" required>
-            <span>Email</span>
-            <i></i>
-        </div>
-        <div class="inputBox">
-            <input name="contraseña" type="password" required>
-            <span>Contraseña</span>
-            <i></i>
-        </div>
-        <div class="links">
-            <a routerLink="/login">Ya tengo una cuenta?</a>
-        </div>
-
-        <button type="submit" >Registro</button>
-    </form>
-</div>
-</body>
+    <div class="box">
+        <form class="form" id="formularioUsuario" (ngSubmit)="agregarUsuario()" [formGroup]="usuarioForm">
+            <div class="HOME">
+              <a routerLink="/inicio">HOME</a>
+            </div>
+            <h2>Formulario de Registro</h2>
+            <div class="inputBox">
+              <input type="text" id="nombre" formControlName="nombre" required>
+              <span>Nombre</span>
+              <i></i>
+            </div>
+            <div class="inputBox">
+              <input type="email" id="correo" formControlName="correo" required>
+              <span>Correo</span>
+              <i></i>
+            </div>
+            <div class="inputBox">
+              <input id="contraseña"
+                formControlName="contraseña" required>
+              <span>Contraseña</span>
+              <i></i>
+            </div>
+            <div class="inputBox">
+              <input type="text" id="id_provincia" formControlName="id_provincia" required>
+              <span>ID Provincia</span>
+              <i></i>
+            </div>
+            <div class="inputBox">
+              <input type="text" id="id_canton" formControlName="id_canton" required>
+              <span>ID Cantón</span>
+              <i></i>
+            </div>
+            <div class="inputBox">
+              <input type="text" id="calle" formControlName="calle" required>
+              <span>Calle</span>
+              <i></i>
+            </div>
+            <div class="links">
+              <a routerLink="/login">Ya tengo una cuenta?</a>
+            </div>
+          
+            <button class="btn btn-primary" type="submit" [disabled]="!usuarioForm.valid" style="color: black;">Registro</button>
+          </form>
+    </div>
+    </body>
