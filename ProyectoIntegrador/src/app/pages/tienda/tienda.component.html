@@ -23,8 +23,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a *ngIf="!servicio.userLoginOn" class="nav-link" routerLink="/login">Login</a>
-<a *ngIf="servicio.userLoginOn" class="nav-link" routerLink="/login">Cerrar sesión</a>
+                            <a *ngIf="!servicio.isUserLoggedIn()" class="nav-link" routerLink="/login">Login</a>
+                            <a *ngIf="servicio.isUserLoggedIn()" class="nav-link" (click)="servicio.logout()">Cerrar sesión</a>
                         </li>
                     </ul>
                 </div>
@@ -41,22 +41,23 @@
             </nav>
             <div class="cart-container">
                 <div class="cart" *ngIf="showCart">
-                    <h2>Carrito</h2>
-                    <ul>
-                        <li *ngFor="let product of carrito">
-                            <div>{{ product.nombre }}</div>
-                            <div>
-                                <img src="{{ product.imagen }}" alt="{{ product.nombre }}" class="product-image">
-                            </div>
-                            <div>{{ product.precio_compra }}</div>
-                            <button (click)="removeFromCart(product)">Eliminar</button>
-                        </li>
-                    </ul>
-                    <p>Total: {{ totalPrice }}</p>
-                    <button (click)="buy()">Comprar</button>
+                  <h2 class="cart-title">Carrito</h2>
+                  <ul class="cart-list">
+                    <li *ngFor="let item of carrito" class="cart-item">
+                      <div class="product-name">{{ item.product.nombre }}</div>
+                      <div>
+                        <img src="{{ item.product.imagen }}" alt="{{ item.product.nombre }}" class="product-image">
+                      </div>
+                      <div class="product-price">{{ item.product.preciocompra }} €</div>
+                      <div class="product-quantity">Cantidad: {{ item.quantity }}</div>
+                      <button (click)="removeFromCart(item)" class="remove-button">x</button>
+                    </li>
+                  </ul>
+                  <p class="total-price">Total: {{ totalPrice }} €</p>
+                  <button (click)="buy()" class="buy-button">Comprar</button>
                 </div>
-            </div>
-        </div>
+              </div>
+        </div> 
     </div>
     <div class="container">
         <h1 class="tTienda">Articulos</h1>
@@ -81,14 +82,15 @@
                                                 aria-hidden="true"></i></div>
                                         <input type="submit" name="cp" value="COMPRAR" class="nombre-boton "
                                             (click)="addToCart(producto)">
-                                        <span>{{ producto.stock }}</span>
-                                        <span>{{ producto.precio_compra }}</span>
+                                        <span>stock:{{ producto.stock }}</span>
+                                        <span>valor:{{ producto?.preciocompra }}</span>
                                         <h5 class="card-title"></h5>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <br>
                 </div>
             </div>
         </div>

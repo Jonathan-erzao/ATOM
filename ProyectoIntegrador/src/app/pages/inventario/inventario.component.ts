@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
-
+import { Router } from '@angular/router'
 
 
 @Component({
@@ -27,7 +27,7 @@ export class InventarioComponent implements OnInit {
     categoria: ['', Validators.required]
   });
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,private router: Router) {
     
   }
 
@@ -46,6 +46,11 @@ export class InventarioComponent implements OnInit {
     });
   }
 
+  logout() {
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/inicio']);
+  }
+  
   obtenerProductos() {
     this.http.get<any[]>('http://localhost:3000/tienda').subscribe(
       data => {

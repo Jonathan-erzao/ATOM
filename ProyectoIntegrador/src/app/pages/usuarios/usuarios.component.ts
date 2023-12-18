@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -24,7 +25,7 @@ export class UsuariosComponent {
     rol: ['', Validators.required]
   });
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,private router: Router) {
 
   }
   ngOnInit() {
@@ -40,6 +41,11 @@ export class UsuariosComponent {
       calle: ['', Validators.required],
       rol: ['', Validators.required]
     });
+  }
+
+  logout() {
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/inicio']);
   }
 
   obtenerRoles() {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-provedores',
@@ -19,7 +20,7 @@ export class ProvedoresComponent {
     correo: ['', Validators.required],
   });
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,private router: Router) {
 
   }
   ngOnInit() {
@@ -31,6 +32,11 @@ export class ProvedoresComponent {
       correo: ['', Validators.required],
     });
   }
+  logout() {
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/inicio']);
+  }
+
   obtenerProveedores() {
     this.http.get<any[]>('http://localhost:3000/provedores').subscribe(
       data => {

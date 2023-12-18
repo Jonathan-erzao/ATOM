@@ -23,8 +23,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a *ngIf="!servicio.userLoginOn" class="nav-link" routerLink="/login">Login</a>
-                            <a *ngIf="servicio.userLoginOn" class="nav-link" (click)="logout()">Cerrar sesión</a>
+                            <a *ngIf="!servicio.isUserLoggedIn()" class="nav-link" routerLink="/login">Login</a>
+                            <a *ngIf="servicio.isUserLoggedIn()" class="nav-link" (click)="servicio.logout()">Cerrar sesión</a>
                         </li>
                     </ul>
                 </div>

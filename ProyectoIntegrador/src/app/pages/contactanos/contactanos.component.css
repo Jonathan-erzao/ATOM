@@ -6,7 +6,16 @@ html{
 .logo{
     z-index: 0;
 }
-.navbar{ z-index: 1;    position: static; font-family: "FIFA Welcome"; font-size: 18px}
+.navbar { 
+    z-index: 1;    
+    position: static; 
+    font-family: "FIFA Welcome"; 
+    font-size: 18px;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
 .btn{
     font-family: "FIFA Welcome"; font-size: 20px; 
 }
@@ -287,3 +296,8 @@ ul {
     }
 }
 
+.perfil-img {
+    width: 100px;  /* Cambia esto al ancho que desees */
+    height: 100px; /* Cambia esto a la altura que desees */
+    object-fit: cover; /* Esto asegura que la imagen se redimensione correctamente */
+  }

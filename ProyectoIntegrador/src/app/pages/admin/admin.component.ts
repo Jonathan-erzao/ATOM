@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { Options } from 'highcharts';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -11,7 +12,11 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.renderChart();
   }
-
+  constructor(private router: Router) { }
+  logout() {
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/inicio']);
+  }
   async renderChart(): Promise<void> {
     const response = await fetch('https://cdn.jsdelivr.net/gh/highcharts/highcharts@v10.3.3/samples/data/usdeur.json');
     const data = await response.json();

@@ -22,15 +22,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a *ngIf="!servicio.userLoginOn" class="nav-link" routerLink="/login">Login</a>
-                        <a *ngIf="servicio.userLoginOn" class="nav-link" routerLink="/login">Cerrar sesión</a>
+                        <a *ngIf="!servicio.isUserLoggedIn()" class="nav-link" routerLink="/login">Login</a>
+                        <a *ngIf="servicio.isUserLoggedIn()" class="nav-link" (click)="servicio.logout()">Cerrar
+                            sesión</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </div>
 </div>
-
+<br>
 <div class="infocontacto container">
     <div class="contactfondo jumbotron jumbotron-fluid">
         <div class="container">
@@ -69,31 +70,30 @@
     </div>
 </div>
 
-<div>
-    <div class="comments-container">
-      <ul id="comments-list" class="comments-list">
-        <li *ngFor="let usuario of usuarios">
-          <div class="comment-main-level">
-            <!-- Avatar -->
-            <div class="comment-avatar">
-              <img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="">
+<div class="container" style="background-color: white; padding: 20px; margin: 0 auto; width: 80%;">
+    <div class="comentario-form" *ngIf="usuarioActual">
+        <form (ngSubmit)="crearComentario()">
+            <div class="form-group">
+                <label for="comentario">Comentario:</label>
+                <textarea class="form-control" id="comentario" rows="3" [(ngModel)]="nuevoComentario"
+                    name="nuevoComentario"></textarea>
             </div>
-            <!-- Contenedor del Comentario -->
-            <div class="comment-box">
-              <div class="comment-head">
-                <h6 class="comment-name by-author">
-                  <a>{{ usuario.nombreUsuario }}</a>
-                </h6>
-                <span>{{ usuario.correoElectronico }}</span>
-                <i class="fa fa-reply"></i>
-                <i class="fa fa-heart"></i>
-              </div>
-              <div class="comment-content">
-                <p>El rendimiento de este producto de computadora ha superado todas mis expectativas. Es rápido, eficiente y confiable. Me encanta la calidad de construcción y la atención al detalle en cada aspecto. Sin duda, es una excelente inversión. Recomiendo este producto a cualquier persona que busque un rendimiento excepcional en su vida digital.</p>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Enviar
+            </button>
+        </form>
     </div>
-  </div>
+    <br>
+    <div class="comentario" *ngFor="let comentario of comentarios">
+        <div class="media">
+            <img class="mr-3 perfil-img" [src]="obtenerRutaImagenAleatoria()" alt="Foto de perfil">
+            <div class="media-body">
+                <h5 class="mt-0">{{comentario.nombre}}</h5>
+                <p>{{comentario.comentario}}</p>
+                <small class="text-muted">{{comentario.fecha | date:'short'}}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">

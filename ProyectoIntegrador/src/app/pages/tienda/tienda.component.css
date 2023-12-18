@@ -126,9 +126,6 @@ html {
 
 }
 
-.boton_compra .boton:hover {
-    width: 250px
-}
 
 .boton_compra .boton .icono {
     display: inline-block;
@@ -152,12 +149,30 @@ html {
     line-height: 60px;
 }
 
+
+.boton_compra .boton {
+    height: auto; /* Cambia de 30px a auto para permitir que el botón se expanda verticalmente */
+    width: 250px; /* Cambia de 30px a 250px para permitir que el botón se expanda horizontalmente */
+    padding: 10px; /* Añade un poco de padding para dar espacio al contenido */
+    /* Resto del código... */
+}
+
+.boton_compra .boton:hover {
+    width: 250px; /* Ya no es necesario cambiar el ancho en hover, ya que el botón siempre tiene el mismo ancho */
+}
+
+.boton_compra .boton .icono {
+    height: auto; /* Cambia de 30px a auto para permitir que el icono se expanda verticalmente */
+    width: auto; /* Cambia de 30px a auto para permitir que el icono se expanda horizontalmente */
+    /* Resto del código... */
+}
+
 .boton_compra .boton span {
-    font-size: 25px;
+    font-size: 12px; /* Reduce el tamaño de la fuente para que encaje mejor en el botón */
     font-weight: 500;
     line-height: 5px;
     margin-left: 10px;
-    color: #747fa0;
+    color: #747fa0;/* Resto del código... */
 }
 
 .icono {
@@ -222,4 +237,65 @@ html {
     max-width: 200px;
     /* Ajusta el tamaño máximo deseado */
     max-height: 200px;
+}
+
+
+
+.cart {
+    text-align: center;
+}
+
+.cart-title {
+    color: #343a40;
+}
+
+.cart-list {
+    list-style: none;
+    padding: 0;
+}
+
+.cart-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 20px;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.product-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.product-price {
+    color: #6c757d;
+}
+
+.remove-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.total-price {
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.buy-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
 }

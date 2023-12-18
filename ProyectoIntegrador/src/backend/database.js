@@ -162,8 +162,6 @@ app.get('/roles', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener datos de la tabla Categoria' });
   }
 });
-
-
 //Metodo get para traer los datos de mi usuario
 app.get('/usuarios', async (req, res) => {
   try {
@@ -218,17 +216,30 @@ app.post('/crearUsuario', async (req, res) => {
     res.status(500).json({ error: 'Error al crear el usuario y la dirección' });
   }
 });
+
+
+
+
 // Método DELETE para eliminar un usuario por ID
 app.delete('/usuarios/:id', async (req, res) => {
   try {
     const userId = req.params.id;
 
-    const query = `
+    // Primero, elimina todos los mensajes asociados a este usuario
+    const deleteMessagesQuery = `
+    DELETE FROM "Usuario".comentario
+    WHERE id_usuario = $1
+    `;
+
+    await pool.query(deleteMessagesQuery, [userId]);
+
+    // Luego, elimina el usuario
+    const deleteUserQuery = `
       DELETE FROM "Usuario".usuario
       WHERE id = $1
     `;
 
-    await pool.query(query, [userId]);
+    await pool.query(deleteUserQuery, [userId]);
 
     res.status(200).json({ message: 'Usuario eliminado exitosamente' });
   } catch (error) {
@@ -350,6 +361,47 @@ app.put('/acprovedor/:id', async (req, res) => {
     res.json({ message: 'Proveedor actualizado exitosamente' });
   } catch (error) {
     console.error('Error al actualizar el proveedor:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+// Obtener Comentarios
+app.get('/obtenerComentarios', async (req, res) => {
+  try {
+    // Consulta para obtener los comentarios y los nombres de los usuarios de la tabla de comentarios
+    const queryComentarios = `
+      SELECT c.id, c.id_usuario, u.nombre, c.comentario, c.fecha
+      FROM "Usuario".comentario c
+      JOIN "Usuario".usuario u ON c.id_usuario = u.id
+    `;
+
+    const resultComentarios = await pool.query(queryComentarios);
+    const comentarios = resultComentarios.rows;
+
+    res.status(200).json(comentarios);
+  } catch (error) {
+    console.error('Error al obtener los comentarios:', error);
+    res.status(500).json({ error: 'Error al obtener los comentarios' });
+  }
+});
+
+// Insertar Comentario
+app.post('/insertarComentario', async (req, res) => {
+  try {
+    const { id_usuario, comentario } = req.body;
+
+    const query = `
+      INSERT INTO "Usuario".comentario (id_usuario, comentario)
+      VALUES ($1, $2)
+    `;
+
+    const values = [id_usuario, comentario];
+
+    await pool.query(query, values);
+
+    res.json({ message: 'Comentario insertado exitosamente' });
+  } catch (error) {
+    console.error('Error al insertar el comentario:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 });

@@ -11,36 +11,34 @@ import { UserLoginService } from 'src/app/service/user-login.service';
 export class LoginComponent {
   correo = '';
   contrasena = '';
-  userLoginOn = false;
 
   constructor(private http: HttpClient, private router: Router, public userLoginService: UserLoginService) {}
 
   login() {
-    // Realizar la petición GET para obtener todos los usuarios
-    if (this.correo === 'admin@admin.com' && this.contrasena === 'superadmin') {
-      // Inicio de sesión exitoso con datos quemados
-      this.userLoginService.setUserLoggedIn();
-      this.router.navigate(['/admin']);
-    }else {this.http.get<any[]>('http://localhost:3000/usuarios').subscribe(
+    console.log('Método login llamado');
+    this.http.get<any[]>('http://localhost:3000/usuarios').subscribe(
       usuarios => {
-        // Verificar si las credenciales coinciden con algún usuario
         const usuario = usuarios.find(u => u.correo === this.correo && u.contraseña === this.contrasena);
         if (usuario) {
-          // Inicio de sesión exitoso
-          if (usuario.correo === 'admin@damin.com' && usuario.contraseña === 'superadmin') {
+          console.log('Usuario encontrado:', usuario);
+          localStorage.setItem('usuario', JSON.stringify(usuario));
+          this.userLoginService.setUserLoggedIn(); // Actualiza el estado de inicio de sesión
+          if (usuario.rnombre === 'admin') {
+            console.log('Redirigiendo a /admin');
             this.router.navigate(['/admin']);
-          } else {
-            this.userLoginService.setUserLoggedIn();
+          } else if (usuario.rnombre === 'user') {
+            console.log('Redirigiendo a /inicio');
             this.router.navigate(['/inicio']);
+          } else {
+            console.error('Rol desconocido');
           }
         } else {
-          // Credenciales inválidas
           console.error('Credenciales inválidas');
         }
       },
       error => {
         console.error('Error al obtener los usuarios:', error);
-      })}
-    
+      }
+    );
   }
 }
