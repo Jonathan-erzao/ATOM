@@ -222,6 +222,7 @@ footer {
 
 .boton-buscar {
     background-color: #4CAF50;
+    border-radius: 10px;
     /* Color de fondo */
     border: none;
     /* Sin bordes */
@@ -235,7 +236,7 @@ footer {
     /* Sin subrayado */
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 2px;
     cursor: pointer;
     /* Cambia el cursor a una mano cuando pasas el ratón por encima */
     transition-duration: 0.4s;
@@ -264,6 +265,10 @@ footer {
 .campo-busqueda {
     width: 150px; /* Ajusta el ancho del cuadro de texto */
     padding: 5px 5px; /* Ajusta el relleno alrededor del texto */
+    background: transparent; 
+    border-radius: 10px; 
+    border: 1px solid white; /* Hace que el contorno siempre sea blanco */
+    color: white;
 }
 
 .busqueda-derecha {
@@ -271,8 +276,11 @@ footer {
     justify-content: flex-end;
     /* Alinea los elementos a la derecha */
     margin-bottom: 20px;
-    margin-right: 200px;
+    margin-right: 290px;
     /* Espacio entre la búsqueda y la tabla */
+    border-radius: 10px; /* Hace que los bordes del botón sean redondeados */
+    background: transparent; /* Hace que el botón sea transparente */
+    border: none; /* Elimina el borde del botón */
 }
 
 .icono-ojo {

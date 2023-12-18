@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+
+
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -62,12 +64,17 @@ export class UsuariosComponent {
     );
   }
 
-  obtenerUsuarios() {
-
+  async obtenerUsuarios() {
     this.http.get<any[]>('http://localhost:3000/usuarios').subscribe(
-      data => {
+      async data => {
         console.log(data);
-        this.usuarios = data;
+        this.usuarios = await Promise.all(data.map(async usuario => {
+          const encoder = new TextEncoder();
+          const data = encoder.encode(usuario.contraseña);
+          const hash = await window.crypto.subtle.digest('SHA-256', data);
+          const hashedPassword = Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+          return { ...usuario, contraseña: hashedPassword };
+        }));
       },
       error => {
         console.error('Error al obtener los datos de usuarios:', error);

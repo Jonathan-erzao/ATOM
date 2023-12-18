@@ -56,7 +56,7 @@
                   <p class="total-price">Total: {{ totalPrice }} €</p>
                   <button (click)="buy()" class="buy-button">Comprar</button>
                 </div>
-              </div>
+            </div>
         </div> 
     </div>
     <div class="container">
@@ -80,10 +80,10 @@
                                     <div class="boton">
                                         <div class="icono" data-id="{{ producto.id }}"><i class="fa fa-boton"
                                                 aria-hidden="true"></i></div>
-                                        <input type="submit" name="cp" value="COMPRAR" class="nombre-boton "
+                                        <input type="submit" name="cp" value="AÑADIR" class="nombre-boton "
                                             (click)="addToCart(producto)">
-                                        <span>stock:{{ producto.stock }}</span>
-                                        <span>valor:{{ producto?.preciocompra }}</span>
+                                        <span class="texto_card">stock:{{ producto.stock }}</span>
+                                        <span class="texto_card">valor:{{ producto?.preciocompra }}</span>
                                         <h5 class="card-title"></h5>
                                     </div>
                                 </div>

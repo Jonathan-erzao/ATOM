@@ -66,6 +66,9 @@ html {
 
 }
 
+.card{
+    border-radius: 10px;
+}
 
 
 
@@ -98,7 +101,7 @@ html {
 .nombre-boton {
     position: relative;
     border-radius: 10px;
-    color: #4f5662;
+    color: #ffffff;
     background-color: #2E4053;
     font-weight: 500;
     padding: 0;
@@ -172,13 +175,21 @@ html {
     font-weight: 500;
     line-height: 5px;
     margin-left: 10px;
-    color: #747fa0;/* Resto del código... */
+    color: #fdfdfd;/* Resto del código... */
 }
 
 .icono {
     left: 100px;
 
 }
+
+.card-img-top {
+    border-radius: 10px;
+    object-fit: cover; /* Añade esta línea */
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho del contenedor */
+    height: 100%; /* Asegura que la imagen ocupe todo el alto del contenedor */
+}
+
 
 /* titulos y parafos*/
 
@@ -188,7 +199,7 @@ html {
     color: #ffffff;
     font-size: 18px;
     font-weight: 40;
-    left: 70px;
+    left: 30px;
     top: -110px;
     display: flex;
     flex-basis: 80rem;

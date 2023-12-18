@@ -77,8 +77,11 @@
 <br>
 <div class="busqueda-derecha">
     <input type="text" class="campo-busqueda" [(ngModel)]="nombreBusqueda" placeholder="Nombre">
-    <button class="boton-buscar" (click)="buscarProducto()">Buscar</button>
+    <button class="boton-buscar" (click)="buscarProducto()">
+        <i class="fa fa-search"></i> <!-- Cambia esto por el icono de búsqueda que estés usando -->
+    </button>
 </div>
+
 <table class="tablaI table">
     <thead>
         <tr>
@@ -111,3 +114,5 @@
         </tr>
     </tbody>
 </table>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

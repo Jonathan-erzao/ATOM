@@ -46,7 +46,7 @@
             <input class="form-control mb-2" type="text" id="nombre" formControlName="nombre" required><br>
 
             <label for="correo">Correo:</label>
-            <input class="form-control mb-2" type="email" id="correo" formControlName="correo" required><br>
+            <input class="form-control mb-2" type="email" id="correo" formControlName="correo" autocomplete="email" required><br>
 
             <label for="contraseña">Contraseña:</label>
             <div style="position: relative;">
@@ -54,10 +54,11 @@
                     formControlName="contraseña" required>
                     <i class="fa fa-eye icono-ojo" (click)="cambiarMostrarContrasenaForm()" style="position: absolute; right: 10px; top: 10px;"></i>
             </div>
+
             <br>
 
             <label for="id_provincia">Provincia:</label>
-            <input class="form-control mb-2" type="text" id="id_provincia" formControlName="id_provincia" required><br>
+            <input class="form-control mb-2" type="text" id="id_provincia" formControlName="id_provincia" autocomplete="off" required><br>  
 
             <label for="id_canton">Canton:</label>
             <input class="form-control mb-2" type="text" id="id_canton" formControlName="id_canton" required><br>
@@ -80,7 +81,9 @@
 <br>
 <div class="busqueda-derecha">
     <input type="text" class="campo-busqueda" [(ngModel)]="nombreBusqueda" placeholder="Nombre">
-    <button class="boton-buscar" (click)="buscarUsuario()">Buscar</button>
+    <button class="boton-buscar" (click)="buscarUsuario()">
+        <i class="fa fa-search"></i> <!-- Cambia esto por el icono de búsqueda que estés usando -->
+    </button>
 </div>
 
 <table class="tablaI table">
@@ -101,10 +104,8 @@
             <th class="clId" scope="row">{{ usuario.id }}</th>
             <td>{{ usuario.nombre }}</td>
             <td>{{ usuario.correo }}</td>
-            <td>
-                <span *ngIf="!mostrarContrasena">{{ ocultarContrasena(usuario['contraseña']) }}</span>
-                <span *ngIf="mostrarContrasena">{{ usuario['contraseña'] }}</span>
-                <i class="fa fa-eye icono-ojo" (click)="cambiarMostrarContrasena()"></i>
+            <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis;">
+                <span>{{ usuario['contraseña'] }}</span>
             </td>
             <td>{{ usuario.id_provincia }} , {{ usuario.id_canton }}, {{ usuario.calle }}</td>
             <td>{{ usuario.rnombre }}</td>

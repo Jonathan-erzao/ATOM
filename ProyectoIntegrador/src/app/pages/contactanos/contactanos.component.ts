@@ -23,7 +23,7 @@ interface Comentario {
 })
 export class ContactanosComponent implements OnInit {
   readonly urlImg = 'assets/img/';
-  rutasImagenes = [this.urlImg + 'zoro.jpg', this.urlImg + 'luffy.jpg', this.urlImg + 'ace.jpg', this.urlImg + 'chopper.jpg', this.urlImg + 'franky.jpg'];
+  rutasImagenes = [this.urlImg + 'zoro.jpg', this.urlImg + 'luffy.jpg', this.urlImg + 'ace.jpg', this.urlImg + 'chopper.jpg', this.urlImg + 'franky.jpg', this.urlImg + 'usopp.jpg'];
   usuarios: Usuario[] = [];
   comentarios: Comentario[] = [];
   nuevoComentario = '';

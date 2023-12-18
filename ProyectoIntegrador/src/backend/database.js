@@ -162,6 +162,8 @@ app.get('/roles', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener datos de la tabla Categoria' });
   }
 });
+
+
 //Metodo get para traer los datos de mi usuario
 app.get('/usuarios', async (req, res) => {
   try {
